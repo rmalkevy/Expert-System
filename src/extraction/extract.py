@@ -1,6 +1,6 @@
-from src import constants
-from src.equation import Equation
-from src.token import Token
+from src.helpers import constants
+from src.classes.equation import Equation
+from src.classes.token import Token
 import re
 
 
@@ -19,7 +19,9 @@ def create_equation(equation):
 
 	left_side_tokens = [token for token in parts[0]]
 	right_side_tokens = [token for token in parts[1]]
-	return Equation(left_side_tokens, right_side_tokens, equation_type)
+	equation = Equation(left_side_tokens, right_side_tokens, equation_type)
+	print(equation.unique_chars)
+	return equation
 
 
 def create_facts(lines, initialized_facts):

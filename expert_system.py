@@ -1,5 +1,5 @@
 import sys
-from src.helpers import *
+from src.helpers.errors import *
 from src.parsing.parse_file import parse_and_validate_file
 from src.extraction.extract import extract_equations_and_facts
 
