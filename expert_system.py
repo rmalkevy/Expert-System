@@ -1,10 +1,14 @@
 import sys
-from helpers import *
-from parse_file import parse_file
+from src.helpers import *
+from src.parsing.parse_file import parse_and_validate_file
+from src.extraction.extract import extract_equations_and_tokens
+
 
 if __name__ == "__main__":
 
 	if len(sys.argv) < 2 or len(sys.argv) > 2:
 		display_error_with_exit("You must add only one file to arguments")
 
-	parse_file(sys.argv[1])
+	lines = parse_and_validate_file(sys.argv[1])
+	print(lines)
+	extract_equations_and_tokens(lines)
