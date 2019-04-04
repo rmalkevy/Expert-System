@@ -2,6 +2,7 @@ import sys
 from src.helpers.errors import *
 from src.parsing.parse_file import parse_and_validate_file
 from src.extraction.extract import extract_equations_and_facts
+from src.solver import find_answers_for_all_main_questions
 
 
 if __name__ == "__main__":
@@ -13,3 +14,5 @@ if __name__ == "__main__":
 	queries = lines.pop().replace('?', '')
 	initialized_facts = lines.pop().replace('=', '')
 	equations, facts = extract_equations_and_facts(lines, initialized_facts)
+
+	find_answers_for_all_main_questions(equations, facts, queries)
