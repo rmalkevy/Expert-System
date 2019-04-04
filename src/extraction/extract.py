@@ -17,10 +17,8 @@ def create_equation(equation):
 		parts = equation.split('=>')
 		equation_type = constants.ONE_WAY
 
-	left_side_tokens = [token for token in parts[0]]
-	right_side_tokens = [token for token in parts[1]]
-	equation = Equation(left_side_tokens, right_side_tokens, equation_type)
-	print(equation.unique_chars)
+	equation = Equation(parts[0], parts[1], equation_type)
+	# print("left: {}, right: {}".format(equation.ls_unique_chars, equation.rs_unique_chars))
 	return equation
 
 
