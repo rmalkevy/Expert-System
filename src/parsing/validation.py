@@ -39,7 +39,7 @@ def validate_equation(equation):
 	if len(parties) != 2:
 		display_error_with_exit("An equation must contain between left and right side implies sign '=>' or '<=>'")
 
-	if len(parties[0]) == 0 or len(parties[1]):
+	if len(parties[0]) == 0 or len(parties[1]) == 0:
 		display_error_with_exit("Each side of equation must contain fact or condition with facts")
 
 	validate_side_of_equation(parties[0])
