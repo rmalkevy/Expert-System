@@ -1,4 +1,5 @@
-from src.helpers.errors import display_error_with_exit
+from src.helpers.notifications import display_error_with_exit
+from src.helpers.constants import *
 import re
 
 
@@ -6,45 +7,54 @@ def validate_lines(lines):
 	if len(lines) < 3:
 		display_error_with_exit("File must contain at least 3 lines with equation, initialized facts and queries")
 
-	queries = lines[-1].replace(' ', '')
-	validate_queries(queries)
-
-	initialized_facts = lines[-2]
-	validate_initialized_facts(initialized_facts)
-
-	equations = lines[0:-2]
-	validate_equations(equations)
+	initialized_facts = ''
+	queries = ''
+	equations = []
+	for line in lines:
+		if line[0] == QUERY_TOKEN and validate_queries(line):
+			queries += line.replace('?', '')
+		elif line[0] == INITIALIZED_FACTS_TOKEN and validate_initialized_facts(line):
+			initialized_facts += line.replace('=', '')
+		elif validate_equation(line):
+			equations.append(line)
+	return equations, initialized_facts, queries
 
 
 def validate_queries(queries):
 	pattern = re.compile("^\?[A-Z]+$")
 	if not pattern.match(queries):
 		display_error_with_exit("Queries must contain at least 2 symbols. Sign '?' and facts. Example: '?ADF'")
+	return True
 
 
 def validate_initialized_facts(initialized_facts):
 	pattern = re.compile("^=[A-Z]+$")
 	if not pattern.match(initialized_facts):
 		display_error_with_exit("Initialized facts must contain at least 2 symbols. Sign '=' and facts. Example: '=ADF'")
-
-
-def validate_equations(equations):
-	[validate_equation(equation.replace(' ', '')) for equation in equations]
+	return True
 
 
 def validate_equation(equation):
-	parties = equation.split("=>")
-	if len(parties) < 2:
-		parties = equation.split("<=>")
-	if len(parties) != 2:
+	sides = equation.split("<=>")
+	if len(sides) == 2:
+		display_error_with_exit("Biconditional rules are not supported: Bonus part")
+
+	sides = equation.split("=>")
+	if len(sides) != 2:
 		display_error_with_exit("An equation must contain between left and right side implies sign '=>' or '<=>'")
 
-	if len(parties[0]) == 0 or len(parties[1]) == 0:
+	if len(sides[0]) == 0 or len(sides[1]) == 0:
 		display_error_with_exit("Each side of equation must contain fact or condition with facts")
 
-	validate_side_of_equation(parties[0])
-	validate_side_of_equation(parties[1])
+	for token in [OR, XOR, NOT, LB, RB]:
+		if token in sides[RIGHT]:
+			display_error_with_exit("Right side of {} contains unsupported symbols".format(equation))
+
+	validate_side_of_equation(sides[0])
+	validate_side_of_equation(sides[1])
+	return True
 
 
 def validate_side_of_equation(side):
+
 	pass

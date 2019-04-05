@@ -1,15 +1,15 @@
 class Stack:
     def __init__(self):
-        self.items = []
+        self.elements = []
 
-    def is_blank(self):
-        return self.items == []
-
-    def push(self, item):
-        self.items.insert(0, item)
+    def push(self, elem):
+        self.elements.insert(0, elem)
 
     def pop(self):
-        return self.items.pop(0)
+        return self.elements.pop(0)
 
     def look_top(self):
-        return self.items[0]
+        return self.elements[0]
+
+    def is_blank(self):
+        return self.elements == []
