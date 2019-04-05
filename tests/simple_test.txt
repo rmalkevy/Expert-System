@@ -1,5 +1,0 @@
-
-C + !A => E + S
-
-=CD
-?SE # S - true, E - true

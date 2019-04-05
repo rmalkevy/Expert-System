@@ -28,7 +28,7 @@ def validate_queries(queries):
 
 
 def validate_initialized_facts(initialized_facts):
-	pattern = re.compile("^=[A-Z]+$")
+	pattern = re.compile("^=([A-Z]+)?$")
 	if not pattern.match(initialized_facts):
 		display_error_with_exit("Initialized facts must contain at least 2 symbols. Sign '=' and facts. Example: '=ADF'")
 	return True
