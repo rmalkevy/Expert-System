@@ -17,6 +17,8 @@ def validate_lines(lines):
 			initialized_facts += line.replace('=', '')
 		elif validate_equation(line):
 			equations.append(line)
+	if queries == '':
+		display_error_with_exit("No query found. A query should contain ? at the beginning")
 	return equations, initialized_facts, queries
 
 
