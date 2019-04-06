@@ -55,7 +55,7 @@ def validate_equation(equation):
 	return True
 
 def validate_extra_chars(str):
-	new_str = re.sub(r'([A-Z]|!|\||\^|\+)', "", str)
+	new_str = re.sub(r'([A-Z]|!|\||\^|\+|\)|\()', "", str)
 	if len(new_str) > 0:
 		display_error_with_exit("The string should not contain only capitalized letters and operators: " + new_str)
 
@@ -72,8 +72,8 @@ def validate_operator_operand_pair(pair, operand_pattern, operator_pattern):
 def validate_side_of_equation(side):
 	validate_extra_chars(side)
 
-	operand_pattern = re.compile("([A-Z]|!)") # regex match to validate operand
-	operator_pattern = re.compile("(\||\^|\+)") # regex match to validate operator
-
-	for i in range(0, len(side), 2): # go over the side string by 2 and validate character pairs
-		validate_operator_operand_pair(side[i:i+2], operand_pattern, operator_pattern)
+	# operand_pattern = re.compile("([A-Z]|!)") # regex match to validate operand
+	# operator_pattern = re.compile("(\||\^|\+)") # regex match to validate operator
+	#
+	# for i in range(0, len(side), 2): # go over the side string by 2 and validate character pairs
+	# 	validate_operator_operand_pair(side[i:i+2], operand_pattern, operator_pattern)
