@@ -54,7 +54,14 @@ def validate_equation(equation):
 	validate_side_of_equation(sides[1])
 	return True
 
+def validate_extra_chars(str):
+	new_str = re.sub(r'([A-Z]|!|\||\^|\+)', "", str)
+	if len(new_str) > 0:
+		display_error_with_exit("The string should not contain only capitalized letters and operators: " + new_str)
+	return True
 
 def validate_side_of_equation(side):
+	validate_extra_chars(side)
+
 
 	pass
