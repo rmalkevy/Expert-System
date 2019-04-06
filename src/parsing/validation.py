@@ -17,6 +17,8 @@ def validate_lines(lines):
 			initialized_facts += line.replace('=', '')
 		elif validate_equation(line):
 			equations.append(line)
+	if queries == '':
+		display_error_with_exit("No query found. A query should contain ? at the beginning")
 	return equations, initialized_facts, queries
 
 
@@ -55,6 +57,11 @@ def validate_equation(equation):
 	return True
 
 
-def validate_side_of_equation(side):
+def validate_extra_chars(str):
+	new_str = re.sub(r'([A-Z]|!|\||\^|\+|\)|\()', "", str)
+	if len(new_str) > 0:
+		display_error_with_exit("The string should not contain only capitalized letters and operators: " + new_str)
 
-	pass
+
+def validate_side_of_equation(side):
+	validate_extra_chars(side)
