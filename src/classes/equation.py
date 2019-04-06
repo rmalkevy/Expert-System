@@ -8,40 +8,42 @@ class Equation:
 		self.left_side = to_polish_notation(left_side_tokens)
 		self.right_side = to_polish_notation(right_side_tokens)
 		self.type = equation_type
-		self.facts_base = facts
-		self.add_negative_sign_to_facts()
+		self.was_here = False
+		self.add_negative_sign_to_facts(facts)
 
 	def __str__(self):
 		return "left_side = {}; right_side = {}; type = {}".format(str(self.left_side), str(self.right_side), str(self.type))
 
-	def add_negative_sign_to_facts(self):
+	def add_negative_sign_to_facts(self, facts_base):
 		right_side_length = len(self.right_side) - 1
 
 		for i in range(0, right_side_length):
 			if i + 1 <= right_side_length and self.right_side[i].isalpha and self.right_side[i + 1] == NOT:
-				self.facts_base[self.right_side[i]].is_negative = True
+				facts_base[self.right_side[i]].is_negative = True
 		self.right_side = [token for token in self.right_side if token != NOT]
 
 	def solve(self, facts_base, equations_dict):
 		results_list = []
+		self.was_here = True
 
 		for token in self.left_side:
 			if token.isalpha():
-				if token in self.facts_base and self.facts_base[token].status:
+				if token in facts_base and facts_base[token].status != None:
 					results_list.append(True)
 				elif token in equations_dict:
 					if token in self.right_side:
 						results_list.append(False)
 						continue
-
 					result = False
 
 					for equation in equations_dict[token]:
-						is_solved = equation.solve(facts_base, equations_dict)
+						if not equation.was_here:
+							is_solved = equation.solve(facts_base, equations_dict)
 
-						if is_solved:
-							result = is_solved
-							break
+							if is_solved:
+								equation.was_here = False
+								result = is_solved
+								break
 
 					results_list.append(result)
 				else:
@@ -60,4 +62,5 @@ class Equation:
 				elif token == XOR:
 					results_list[PREV_ELEM] = results_list[PREV_ELEM] ^ results_list[LAST_ELEM]
 					results_list.pop()
+
 		return results_list[LAST_ELEM]

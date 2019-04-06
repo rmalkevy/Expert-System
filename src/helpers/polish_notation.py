@@ -4,8 +4,8 @@ from src.classes.stack import Stack
 
 def to_polish_notation(tokens):
 	operators = dict()
-	operators[NOT] = 3
-	operators[AND] = 2
+	operators[NOT] = 4
+	operators[AND] = 3
 	operators[OR] = 2
 	operators[XOR] = 2
 	operators[LB] = 1
