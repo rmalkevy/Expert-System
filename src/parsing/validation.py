@@ -51,7 +51,6 @@ def validate_equation(equation):
 			display_error_with_exit("Right side of {} contains unsupported symbols".format(equation))
 
 	validate_side_of_equation(sides[0])
-	print(sides[0])
 	validate_side_of_equation(sides[1])
 	return True
 

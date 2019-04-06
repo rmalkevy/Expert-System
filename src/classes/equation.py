@@ -8,7 +8,7 @@ class Equation:
 		self.left_side = to_polish_notation(left_side_tokens)
 		self.right_side = to_polish_notation(right_side_tokens)
 		self.type = equation_type
-		self.facts = facts
+		self.facts_base = facts
 		self.add_negative_sign_to_facts()
 
 	def __str__(self):
@@ -19,7 +19,7 @@ class Equation:
 
 		for i in range(0, right_side_length):
 			if i + 1 <= right_side_length and self.right_side[i].isalpha and self.right_side[i + 1] == NOT:
-				self.facts[self.right_side[i]].is_negative = True
+				self.facts_base[self.right_side[i]].is_negative = True
 		self.right_side = [token for token in self.right_side if token != NOT]
 
 	def solve(self, facts_base, equations_dict):
@@ -27,7 +27,7 @@ class Equation:
 
 		for token in self.left_side:
 			if token.isalpha():
-				if token in facts_base:
+				if token in self.facts_base and self.facts_base[token].status:
 					results_list.append(True)
 				elif token in equations_dict:
 					if token in self.right_side:

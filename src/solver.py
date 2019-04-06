@@ -4,8 +4,8 @@ from .helpers.notifications import display_result
 def find_answers_for_all_main_questions(equations_dict, facts_base, queries):
 
 	for query_token in queries:
-		if query_token in facts_base:
-			display_result(query_token, facts_base[query_token].status)
+		if query_token in facts_base and facts_base[query_token].status:
+			display_result(query_token, True)
 		elif query_token in equations_dict:
 			result = False
 
@@ -16,7 +16,9 @@ def find_answers_for_all_main_questions(equations_dict, facts_base, queries):
 					result = is_solved
 					break
 
-			display_result(query_token, result)
+			answer = not result if facts_base[query_token].is_negative else result
+			display_result(query_token, answer)
 		else:
-			display_result(query_token, False)
+			answer = True if facts_base[query_token].is_negative else False
+			display_result(query_token, answer)
 
