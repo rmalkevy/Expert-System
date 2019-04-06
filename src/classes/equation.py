@@ -4,13 +4,23 @@ from src.helpers.notifications import display_error_with_exit
 
 
 class Equation:
-	def __init__(self, left_side_tokens, right_side_tokens, equation_type):
+	def __init__(self, left_side_tokens, right_side_tokens, equation_type, facts):
 		self.left_side = to_polish_notation(left_side_tokens)
 		self.right_side = to_polish_notation(right_side_tokens)
 		self.type = equation_type
+		self.facts = facts
+		self.add_negative_sign_to_facts()
 
 	def __str__(self):
 		return "left_side = {}; right_side = {}; type = {}".format(str(self.left_side), str(self.right_side), str(self.type))
+
+	def add_negative_sign_to_facts(self):
+		right_side_length = len(self.right_side) - 1
+
+		for i in range(0, right_side_length):
+			if i + 1 <= right_side_length and self.right_side[i].isalpha and self.right_side[i + 1] == NOT:
+				self.facts[self.right_side[i]].is_negative = True
+		self.right_side = [token for token in self.right_side if token != NOT]
 
 	def solve(self, facts_base, equations_dict):
 		results_list = []

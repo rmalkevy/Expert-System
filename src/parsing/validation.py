@@ -46,11 +46,12 @@ def validate_equation(equation):
 	if len(sides[0]) == 0 or len(sides[1]) == 0:
 		display_error_with_exit("Each side of equation must contain fact or condition with facts")
 
-	for token in [OR, XOR, NOT, LB, RB]:
+	for token in [OR, XOR, LB, RB]:
 		if token in sides[RIGHT]:
 			display_error_with_exit("Right side of {} contains unsupported symbols".format(equation))
 
 	validate_side_of_equation(sides[0])
+	print(sides[0])
 	validate_side_of_equation(sides[1])
 	return True
 

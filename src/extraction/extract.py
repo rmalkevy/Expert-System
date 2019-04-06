@@ -1,29 +1,35 @@
 from src.helpers import constants
 from src.classes.equation import Equation
 from src.classes.token import Token
+import re
 
 
 def extract_equations_and_facts(equations, initialized_facts):
-	facts = create_facts(initialized_facts)
-	equations = [create_equation(equation) for equation in equations]
+	facts = create_facts(equations, initialized_facts)
+	equations = [create_equation(equation, facts) for equation in equations]
 	equations_dict = create_equations_dict(equations)
 	return equations_dict, facts
 
 
-def create_equation(equation):
+def create_equation(equation, facts):
 	equation_type = constants.TWO_WAY
 	parts = equation.split('<=>')
 	if len(parts) != 2:
 		parts = equation.split('=>')
 		equation_type = constants.ONE_WAY
 
-	equation = Equation(parts[0], parts[1], equation_type)
+	equation = Equation(parts[0], parts[1], equation_type, facts)
 	return equation
 
 
-def create_facts(initialized_facts):
+def create_facts(equations, initialized_facts):
+	regex = re.compile('[^A-Z]')
+
+	chars = ''
+	for line in equations:
+		chars += regex.sub('', line)
 	facts = {}
-	for char in list(set(initialized_facts)):
+	for char in list(set(chars + initialized_facts)):
 		facts[char] = Token(constants.OPERATOR, char)
 	return initialize_facts(facts, initialized_facts)
 
