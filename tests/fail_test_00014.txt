@@ -1,3 +1,0 @@
-C   => E
-        # here must be error
-= ?C =AB ?C =C ?AB ++++++ ^^^^ ||||||| => => => ###

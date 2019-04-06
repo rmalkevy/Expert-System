@@ -1,4 +1,0 @@
-C   => E
-   (((((())))))A++++++=>=>=>BBBBBBBBBBBB||||||||^^^^^^^^     # here must be error
-=
-?C

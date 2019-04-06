@@ -1,4 +1,4 @@
-C => !(E+V)# C implies E
+C => !E+V   # C implies E
 
 ?=ABC
 =QWE
